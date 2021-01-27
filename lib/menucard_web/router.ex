@@ -19,6 +19,8 @@ defmodule MenucardWeb.Router do
     get "/", PageController, :index
   end
 
+  forward "/graphiql", Absinthe.Plug.GraphiQL, schema: MenucardWeb.Schema
+
   # Other scopes may use custom stacks.
   # scope "/api", MenucardWeb do
   #   pipe_through :api
