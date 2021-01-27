@@ -8,6 +8,15 @@ defmodule Menucard.Menu do
 
   alias Menucard.Menu.Item
 
+  def get_item_with_review(%{id: id}) do
+    Repo.get!(Item, id)
+    |> Repo.preload(:reviews)
+  end
+
+  def get_item(%{id: id}) do
+    Repo.get!(Item, id)
+  end
+
   @doc """
   Returns the list of items.
 

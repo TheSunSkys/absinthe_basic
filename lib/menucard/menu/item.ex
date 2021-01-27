@@ -6,6 +6,8 @@ defmodule Menucard.Menu.Item do
     field :name, :string
     field :price, :integer
 
+    has_many(:reviews, Menucard.Menu.Review)
+
     timestamps()
   end
 

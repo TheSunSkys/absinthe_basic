@@ -7,7 +7,7 @@ defmodule Menucard.Menu.Review do
     field :comment, :string
     # field :item_id, :id
 
-    belongs_to(:item, MenuCard.Menu.Item)
+    belongs_to(:item, Menucard.Menu.Item)
 
     timestamps()
   end

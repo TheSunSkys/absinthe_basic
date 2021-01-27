@@ -1,5 +1,6 @@
 defmodule MenucardWeb.Schema do
   use Absinthe.Schema
+  alias Menucard.Menu
 
   @desc "An item"
   object :item do
@@ -21,8 +22,7 @@ defmodule MenucardWeb.Schema do
       arg(:id, non_null(:id))
 
       resolve(fn args, _ ->
-        new_id = args.id
-        {:ok, Menucard.Menu.get_item!(new_id)}
+        {:ok, Menu.get_item_with_review(args)}
       end)
     end
   end
@@ -33,8 +33,17 @@ defmodule MenucardWeb.Schema do
       arg(:price, non_null(:integer))
 
       resolve(fn args, _ ->
-        {:ok, %Menucard.Menu.Item{} = data} = Menucard.Menu.create_item(args)
-        {:ok, data}
+        Menu.create_item(args)
+      end)
+    end
+
+    field :do_review, :review do
+      arg(:comment, non_null(:string))
+      arg(:author_id, non_null(:id))
+      arg(:item_id, non_null(:id))
+
+      resolve(fn args, _ ->
+        Menu.create_review(args)
       end)
     end
   end
