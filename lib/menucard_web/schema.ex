@@ -62,7 +62,9 @@ defmodule MenucardWeb.Schema do
 
       middleware(Middleware.Authorize, "")
 
-      resolve(fn args, _ ->
+      # get current user
+      resolve(fn _, args, %{context: %{current_user: current_user}} ->
+        current_user |> IO.inspect()
         {:ok, Account.get_user_by_username!(args.username)}
       end)
     end
