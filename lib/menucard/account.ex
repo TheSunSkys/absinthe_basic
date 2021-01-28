@@ -38,6 +38,24 @@ defmodule Menucard.Account do
   def get_user!(id), do: Repo.get!(User, id)
 
   @doc """
+  Gets a single user.
+
+  Raises `Ecto.NoResultsError` if the User does not exist.
+
+  ## Examples
+
+      iex> get_user_by_username("fang")
+      %User{}
+
+      iex> get_user_by_username("456")
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_user_by_username!(username) do
+    Repo.get_by!(User, username: username)
+  end
+
+  @doc """
   Creates a user.
 
   ## Examples

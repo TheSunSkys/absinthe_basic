@@ -3,9 +3,9 @@ defmodule MenucardWeb.Schema do
   alias Menucard.Menu
   alias Menucard.Account
   alias Bcrypt
+  alias MenucardWeb.Middleware
 
   def hash_password(password), do: Bcrypt.hash_pwd_salt(password)
-  def validate_password(password, hash), do: Bcrypt.verify_pass(password, hash)
 
   @desc "An item"
   object :item do
@@ -29,6 +29,25 @@ defmodule MenucardWeb.Schema do
     field(:name, :string)
   end
 
+  @desc "User input"
+  input_object :user_input do
+    field(:username, non_null(:string))
+    field(:name, non_null(:string))
+    field(:password, non_null(:string))
+  end
+
+  @desc "Session"
+  object :session do
+    field(:token, :string)
+    field(:user, :user)
+  end
+
+  @desc "Session input"
+  input_object :session_input do
+    field(:username, non_null(:string))
+    field(:password, non_null(:string))
+  end
+
   query do
     field :item, :item do
       arg(:id, non_null(:id))
@@ -37,16 +56,32 @@ defmodule MenucardWeb.Schema do
         {:ok, Menu.get_item_with_review(args)}
       end)
     end
+
+    field :user, :user do
+      arg(:username, non_null(:string))
+
+      middleware(Middleware.Authorize, "")
+
+      resolve(fn args, _ ->
+        {:ok, Account.get_user_by_username!(args.username)}
+      end)
+    end
   end
 
   mutation do
-    field :create_user, :user do
-      arg(:name, non_null(:string))
-      arg(:username, non_null(:string))
-      arg(:password, non_null(:string))
+    field :login_user, :session do
+      arg(:input, non_null(:session_input))
 
-      resolve(fn args, _ ->
-        Account.create_user(Map.merge(args, %{password: args.password |> hash_password()}))
+      resolve(fn _, %{input: input}, _ ->
+        Account.Session.authenticate(input)
+      end)
+    end
+
+    field :create_user, :user do
+      arg(:input, non_null(:user_input))
+
+      resolve(fn _, %{input: input}, _ ->
+        Account.create_user(Map.merge(input, %{password: input.password |> hash_password()}))
       end)
     end
 

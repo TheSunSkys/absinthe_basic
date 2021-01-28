@@ -7,6 +7,10 @@
 # General application configuration
 use Mix.Config
 
+config :menucard, Menucard.Guardian,
+  issuer: "menucard",
+  secret_key: "504ye6h6Mg6etxDEaVDkwYNy1yL67vztxHGBls6aQa05boBlkjKLYDrfTVEmEYf6"
+
 config :menucard,
   ecto_repos: [Menucard.Repo]
 
