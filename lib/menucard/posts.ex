@@ -19,6 +19,7 @@ defmodule Menucard.Posts do
   """
   def list_content do
     Repo.all(Post)
+    |> Repo.preload([:author, :comment])
   end
 
   @doc """
@@ -52,7 +53,8 @@ defmodule Menucard.Posts do
   def create_post(attrs \\ %{}) do
     %Post{}
     |> Post.changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert!()
+    |> Repo.preload(:author)
   end
 
   @doc """

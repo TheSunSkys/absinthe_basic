@@ -7,7 +7,7 @@ defmodule Menucard.Posts.Post do
     field :title, :string
 
     belongs_to(:author, Menucard.Account.User)
-    has_many(:commens, Menucard.Posts.Comment)
+    has_many(:comment, Menucard.Posts.Comment)
 
     timestamps()
   end
