@@ -25,7 +25,7 @@ defmodule MenucardWeb.Types.PostType do
 
   @desc "Comment input"
   input_object :comment_input do
-    field(:id, non_null(:id))
+    field(:post_id, non_null(:id))
     field(:comment, non_null(:string))
   end
 end

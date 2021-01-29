@@ -19,7 +19,7 @@ defmodule Menucard.Posts do
   """
   def list_content do
     Repo.all(Post)
-    |> Repo.preload([:author, :comment])
+    |> Repo.preload([:author, comment: [:author]])
   end
 
   @doc """
@@ -150,7 +150,8 @@ defmodule Menucard.Posts do
   def create_comment(attrs \\ %{}) do
     %Comment{}
     |> Comment.changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert!()
+    |> Repo.preload(:author)
   end
 
   @doc """

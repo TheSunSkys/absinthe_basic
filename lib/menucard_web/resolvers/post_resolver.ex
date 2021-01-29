@@ -6,6 +6,7 @@ defmodule MenucardWeb.Resolvers.PostResolver do
   end
 
   def get_post_list(_, _, _) do
+    Posts.list_content() |> IO.inspect()
     {:ok, Posts.list_content()}
   end
 end

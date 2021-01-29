@@ -35,5 +35,11 @@ defmodule MenucardWeb.Schema do
       middleware(Middleware.Authorize, "")
       resolve(&Resolvers.PostResolver.create_post/3)
     end
+
+    field :create_comment, type: :comment do
+      arg(:input, non_null(:comment_input))
+      middleware(Middleware.Authorize, "")
+      resolve(&Resolvers.CommentResolver.create_comment/3)
+    end
   end
 end
