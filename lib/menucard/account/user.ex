@@ -7,6 +7,8 @@ defmodule Menucard.Account.User do
     field :password, :string
     field :username, :string
 
+    has_many(:posts, Menucard.Posts.Post)
+
     timestamps()
   end
 
