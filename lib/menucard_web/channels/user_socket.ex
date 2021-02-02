@@ -1,6 +1,9 @@
 defmodule MenucardWeb.UserSocket do
   use Phoenix.Socket
 
+  use Absinthe.Phoenix.Socket,
+    schema: MenucardWeb.Schema
+
   ## Channels
   # channel "room:*", MenucardWeb.RoomChannel
 
@@ -16,8 +19,21 @@ defmodule MenucardWeb.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   @impl true
-  def connect(_params, socket, _connect_info) do
+  def connect(params, socket) do
+    current_user = current_user(params)
+
+    socket =
+      Absinthe.Phoenix.Socket.put_options(socket,
+        context: %{
+          current_user: current_user
+        }
+      )
+
     {:ok, socket}
+  end
+
+  defp current_user(%{"user_id" => id}) do
+    Menucard.Account.get_user!(id)
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:

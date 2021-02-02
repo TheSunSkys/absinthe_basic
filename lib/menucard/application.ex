@@ -14,7 +14,8 @@ defmodule Menucard.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Menucard.PubSub},
       # Start the Endpoint (http/https)
-      MenucardWeb.Endpoint
+      MenucardWeb.Endpoint,
+      {Absinthe.Subscription, MenucardWeb.Endpoint}
       # Start a worker by calling: Menucard.Worker.start_link(arg)
       # {Menucard.Worker, arg}
     ]

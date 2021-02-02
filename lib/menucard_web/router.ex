@@ -20,7 +20,9 @@ defmodule MenucardWeb.Router do
     get "/", PageController, :index
   end
 
-  forward "/graphql", Absinthe.Plug.GraphiQL, schema: MenucardWeb.Schema
+  forward "/graphql", Absinthe.Plug.GraphiQL,
+    schema: MenucardWeb.Schema,
+    socket: MenucardWeb.UserSocket
 
   scope "/api" do
     pipe_through :api

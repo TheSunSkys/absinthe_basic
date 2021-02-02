@@ -20,7 +20,7 @@ defmodule Menucard.MixProject do
   def application do
     [
       mod: {Menucard.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :absinthe_plug]
     ]
   end
 
@@ -33,7 +33,7 @@ defmodule Menucard.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.3"},
+      {:phoenix, "~> 1.5.0"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
@@ -45,10 +45,14 @@ defmodule Menucard.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:absinthe, "~> 1.4"},
-      {:absinthe_plug, "~> 1.4"},
+      {:absinthe, "~> 1.5.0", override: true},
+      {:absinthe_plug, "~> 1.5", override: true},
+      {:absinthe_phoenix, "~>2.0"},
       {:bcrypt_elixir, "~> 2.0"},
-      {:guardian, "~> 2.0"}
+      {:guardian, "~> 2.0"},
+      {:decimal, "~> 1.0"},
+      # {:decimal, "~> 2.0", override: true},
+      {:phoenix_pubsub, "~> 2.0", override: true}
     ]
   end
 
